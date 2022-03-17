@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "DKC3 Level Changer",
+  "name": "DKC3 Level Properties Editor",
   "icons": [
     {
       "src": "favicon.ico",

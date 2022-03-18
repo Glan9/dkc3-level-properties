@@ -14,7 +14,6 @@ function App() {
   const [ rom, setRom ] = useState({path: "", file: null});
   const [ blob, setBlob ] = useState("");
   const [ level, setLevel ] = useState("1A");
-  const [ outputURL, setOutputURL ] = useState("");
 
   const updateBlob = function(index, newBytes){
     setBlob(prev => prev.slice(0, index) + newBytes + prev.slice(index + newBytes.length));

@@ -4,24 +4,21 @@ import ParrotToggle from './ParrotToggle';
 import BonusTypePicker from './BonusTypePicker';
 
 import { levels } from './constants';
-import { readLittleEndianBytes, createLittleEndianBytes, readBigEndianBytes, createBigEndianBytes } from './helpers';
+import { readLittleEndianBytes, createLittleEndianBytes } from './helpers';
 
 export default function Bonus(props){
   const [ values, setValues ] = useState({
     address: 0,
     type: 0,
     goal: 0,
+    start_param: 0,
     start_x: 0,
     start_y: 0,
     parrot: 0
   });
 
-  const updateValue = function(offset, newValue, length, endianness="little"){
-    if (endianness == "big") {
-      props.updateBlob(values.address + offset, createBigEndianBytes(newValue, length));
-    } else {
-      props.updateBlob(values.address + offset, createLittleEndianBytes(newValue, length));
-    }
+  const updateValue = function(offset, newValue, length){
+    props.updateBlob(values.address + offset, createLittleEndianBytes(newValue, length));
   };
 
   // The goals are stored such that 0x30 translates to 30 in decimal, 0x31 would be 31, etc.
@@ -36,13 +33,13 @@ export default function Bonus(props){
 
   useEffect(() => {
     const address = parseInt(levels[props.level].address, 16);
-    //console.log(props.blob.charCodeAt(address + 17), props.blob.charCodeAt(address + 18));
     setValues({
       address: address,
       type: readLittleEndianBytes(props.blob, address + 2, 1),
       goal: goalToDec(readLittleEndianBytes(props.blob, address + 3, 1)),
-      start_x: readBigEndianBytes(props.blob, address + 17, 2),
-      start_y: readBigEndianBytes(props.blob, address + 19, 2),
+      start_param: readLittleEndianBytes(props.blob, address + 15, 1),
+      start_x: readLittleEndianBytes(props.blob, address + 18, 2) - 256,
+      start_y: readLittleEndianBytes(props.blob, address + 20, 2) - 256,
       parrot: (readLittleEndianBytes(props.blob, address + 15, 1) & 16) >> 4
     });
   }, [props.level, props.blob])
@@ -64,12 +61,16 @@ export default function Bonus(props){
         <div className="coords-group start">
           <h3>Level Start</h3>
           <div className="coords-group-line">
+            <span>Param</span>
+            <input type="number" value={values.start_param} onChange={(evt) => updateValue(15, evt.target.value, 1)} />
+          </div>
+          <div className="coords-group-line">
             <span>X</span>
-            <input type="number" value={values.start_x} onChange={(evt) => updateValue(17, evt.target.value, 2, "big")} />
+            <input type="number" value={values.start_x} onChange={(evt) => updateValue(17, parseInt(evt.target.value)+256, 2)} />
           </div>
           <div className="coords-group-line">
             <span>Y</span>
-            <input type="number" value={values.start_y} onChange={(evt) => updateValue(19, evt.target.value, 2, "big")} />
+            <input type="number" value={values.start_y} onChange={(evt) => updateValue(19, parseInt(evt.target.value)+256, 2)} />
           </div>
         </div>
       </section>

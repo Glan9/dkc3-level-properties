@@ -39,3 +39,4 @@ export const createBigEndianBytes = function(value, length){
 
   return result;
 };
+

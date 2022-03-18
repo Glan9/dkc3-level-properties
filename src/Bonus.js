@@ -56,13 +56,13 @@ export default function Bonus(props){
         </div>
         <div>
           <span>Goal Count </span>
-          <input type="number" value={values.goal} onChange={(evt) => updateValue(3, decToGoal(evt.target.value), 1)} />
+          <input type="number" value={values.goal} disabled={values.type === 1} onChange={(evt) => updateValue(3, decToGoal(evt.target.value), 1)} />
         </div>
       </div>
       <ParrotToggle value={values.parrot} onClick={() => updateValue(13, readLittleEndianBytes(props.blob, values.address + 15, 1) ^ 16, 1)} />
       <section className="coords-editor">
         <div className="coords-group start">
-          <h3>Spawn Point</h3>
+          <h3>Level Start</h3>
           <div className="coords-group-line">
             <span>X</span>
             <input type="number" value={values.start_x} onChange={(evt) => updateValue(17, evt.target.value, 2, "big")} />

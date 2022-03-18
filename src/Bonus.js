@@ -37,7 +37,7 @@ export default function Bonus(props){
       address: address,
       type: readLittleEndianBytes(props.blob, address + 2, 1),
       goal: goalToDec(readLittleEndianBytes(props.blob, address + 3, 1)),
-      start_param: readLittleEndianBytes(props.blob, address + 15, 1),
+      start_param: readLittleEndianBytes(props.blob, address + 17, 1),
       start_x: readLittleEndianBytes(props.blob, address + 18, 2) - 256,
       start_y: readLittleEndianBytes(props.blob, address + 20, 2) - 256,
       parrot: (readLittleEndianBytes(props.blob, address + 15, 1) & 16) >> 4
@@ -53,7 +53,8 @@ export default function Bonus(props){
         </div>
         <div>
           <span>Goal Count </span>
-          <input type="number" value={values.goal} disabled={values.type === 1} onChange={(evt) => updateValue(3, decToGoal(evt.target.value), 1)} />
+          <input type="number" value={values.goal} onChange={(evt) => updateValue(3, decToGoal(evt.target.value), 1)} />
+          {values.type === 1 && <span> Note: Goal count should be 1 for Find the Coin bonuses</span>}
         </div>
       </div>
       <ParrotToggle value={values.parrot} onClick={() => updateValue(13, readLittleEndianBytes(props.blob, values.address + 15, 1) ^ 16, 1)} />

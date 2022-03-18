@@ -66,11 +66,11 @@ export default function Bonus(props){
           </div>
           <div className="coords-group-line">
             <span>X</span>
-            <input type="number" value={values.start_x} onChange={(evt) => updateValue(17, parseInt(evt.target.value)+256, 2)} />
+            <input type="number" value={values.start_x} onChange={(evt) => updateValue(18, parseInt(evt.target.value)+256, 2)} />
           </div>
           <div className="coords-group-line">
             <span>Y</span>
-            <input type="number" value={values.start_y} onChange={(evt) => updateValue(19, parseInt(evt.target.value)+256, 2)} />
+            <input type="number" value={values.start_y} onChange={(evt) => updateValue(20, parseInt(evt.target.value)+256, 2)} />
           </div>
         </div>
       </section>

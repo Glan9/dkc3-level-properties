@@ -57,7 +57,7 @@ export default function Bonus(props){
           {values.type === 1 && <span> Note: Goal count should be 1 for Find the Coin bonuses</span>}
         </div>
       </div>
-      <ParrotToggle value={values.parrot} onClick={() => updateValue(13, readLittleEndianBytes(props.blob, values.address + 15, 1) ^ 16, 1)} />
+      <ParrotToggle value={values.parrot} onClick={() => updateValue(15, readLittleEndianBytes(props.blob, values.address + 15, 1) ^ 16, 1)} />
       <section className="coords-editor">
         <div className="coords-group start">
           <h3>Level Start</h3>

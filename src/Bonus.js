@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from 'react';
 
 import ParrotToggle from './ParrotToggle';
+import KoinToggle from './KoinToggle';
 import BonusTypePicker from './BonusTypePicker';
 
 import { levels } from './constants';
@@ -14,7 +15,8 @@ export default function Bonus(props){
     start_param: 0,
     start_x: 0,
     start_y: 0,
-    parrot: 0
+    parrot: 0,
+    koin: 0
   });
 
   const updateValue = function(offset, newValue, length){
@@ -40,7 +42,8 @@ export default function Bonus(props){
       start_param: readLittleEndianBytes(props.blob, address + 17, 1),
       start_x: readLittleEndianBytes(props.blob, address + 18, 2) - 256,
       start_y: readLittleEndianBytes(props.blob, address + 20, 2) - 256,
-      parrot: (readLittleEndianBytes(props.blob, address + 15, 1) & 16) >> 4
+      parrot: (readLittleEndianBytes(props.blob, address + 15, 1) & 16) >> 4,
+      koin: (readLittleEndianBytes(props.blob, address + 16, 1) & 16) >> 4
     });
   }, [props.level, props.blob])
 
@@ -58,6 +61,7 @@ export default function Bonus(props){
         </div>
       </div>
       <ParrotToggle value={values.parrot} onClick={() => updateValue(15, readLittleEndianBytes(props.blob, values.address + 15, 1) ^ 16, 1)} />
+      <KoinToggle value={values.koin} onClick={() => updateValue(16, readLittleEndianBytes(props.blob, values.address + 16, 1) ^ 16, 1)} />
       <section className="coords-editor">
         <div className="coords-group start">
           <h3>Level Start</h3>

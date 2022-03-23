@@ -2,6 +2,7 @@ import { React, useState, useEffect } from 'react';
 
 import BGMPicker from './BGMPicker';
 import ParrotToggle from './ParrotToggle';
+import KoinToggle from './KoinToggle';
 
 import { levels } from './constants';
 import { readLittleEndianBytes, createLittleEndianBytes } from './helpers';
@@ -17,7 +18,8 @@ export default function Boss(props){
     mid_param: 0,
     mid_x: 0,
     mid_y: 0,
-    parrot: 0
+    parrot: 0,
+    koin: 0
   });
 
   const updateValue = function(offset, newValue, length){
@@ -36,7 +38,8 @@ export default function Boss(props){
       mid_param: readLittleEndianBytes(props.blob, address + 20, 1),
       mid_x: readLittleEndianBytes(props.blob, address + 21, 2) - 256,
       mid_y: readLittleEndianBytes(props.blob, address + 23, 2) - 256,
-      parrot: (readLittleEndianBytes(props.blob, address + 13, 1) & 16) >> 4
+      parrot: (readLittleEndianBytes(props.blob, address + 13, 1) & 16) >> 4,
+      koin: (readLittleEndianBytes(props.blob, address + 14, 1) & 16) >> 4
     });
   }, [props.level, props.blob])
 
@@ -47,6 +50,7 @@ export default function Boss(props){
         <BGMPicker value={values.bgm} onChange={newValue => updateValue(2, newValue, 1)} />
       </div>
       <ParrotToggle value={values.parrot} onClick={() => updateValue(13, readLittleEndianBytes(props.blob, values.address + 13, 1) ^ 16, 1)} />
+      <KoinToggle value={values.koin} onClick={() => updateValue(14, readLittleEndianBytes(props.blob, values.address + 14, 1) ^ 16, 1)} />
       <section className="coords-editor">
         <div className="coords-group start">
           <h3>Level Start</h3>

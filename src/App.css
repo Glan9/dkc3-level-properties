@@ -52,3 +52,17 @@
 .quawks {
   background-image: url("./quawks.png");
 }
+
+.koin-button {
+  width: 50px;
+  height: 50px;
+  background-size: contain;
+}
+
+.stand {
+  background-image: url("./koinyes.png");
+}
+
+.no-stand {
+  background-image: url("./koinno.png");
+}
